@@ -30,6 +30,6 @@ jobs:
           gh release create "${{ inputs.tag }}" \
               --repo="$GITHUB_REPOSITORY" \
               --title="${{ inputs.tag }}" \
-              --notes-start-tag="${{ steps.prev-release.outputs.tag }}"
+              --notes-from-tag 
       - run: echo "Deploying my_image:${{ inputs.tag }}"
       - run: echo "🍏 This job's status is ${{ job.status }}."
