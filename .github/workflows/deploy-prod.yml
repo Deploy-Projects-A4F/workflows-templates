@@ -28,7 +28,7 @@ jobs:
         run: |
           PREV_TAG=${{ steps.prev-release.outputs.tag }}
           NEW_TAG=${{ inputs.tag }}
-          NOTES=$(git log $PREV_TAG..$NEW_TAG)
+          NOTES=$(git log $PREV_TAG..$NEW_TAG --oneline)
           echo "::set-output name=notes::$NOTES"
       - name: Create release
         env:
