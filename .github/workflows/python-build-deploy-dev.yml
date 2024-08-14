@@ -5,11 +5,7 @@ on:
     inputs:
       change_type:
         required: true
-        type: choice
-        options: 
-        - MAJOR
-        - MINOR
-        - PATCH
+        type: string
 
 permissions: write-all
 jobs:
