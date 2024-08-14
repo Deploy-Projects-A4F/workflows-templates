@@ -1,0 +1,15 @@
+name: Prod Deploy Template
+
+on:
+  workflow_call:
+    inputs:
+      tag:
+        required: true
+        type: string
+
+jobs:
+  Deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Deploying my_image:${{ inputs.tag }}"
+      - run: echo "🍏 This job's status is ${{ job.status }}."
