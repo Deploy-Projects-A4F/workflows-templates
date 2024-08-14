@@ -11,6 +11,15 @@ jobs:
   Deploy:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Get previous release tag
+        id: prev-release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          PREV_RELEASE=$(gh release list --limit 1 --json tagName --jq '.[0].tagName')
+          echo "::set-output name=tag::$PREV_RELEASE"
       - name: Create release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
