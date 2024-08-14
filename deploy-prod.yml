@@ -1,0 +1,23 @@
+name: Deploy Template
+
+on:
+  workflow_call:
+    inputs:
+      tag:
+        required: true
+        type: string
+
+jobs:
+  Deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create "${{ inputs.tag }}" \
+              --repo="$GITHUB_REPOSITORY" \
+              --title="${{ inputs.tag }}" \
+              --generate-notes
+      - run: echo "Deploying my_image:${{ inputs.tag }}"
+      - run: echo "🍏 This job's status is ${{ job.status }}."
