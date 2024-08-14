@@ -24,7 +24,9 @@ jobs:
         id: release-notes
         run: |
           PREV_TAG=${{ steps.prev-release.outputs.tag }}
-          NEW_TAG=${{ github.ref_name }}
+          NEW_TAG=${{ inputs.tag }}
+          echo "$PREV_TAG"
+          echo "$NEW_TAG"
           NOTES=$(git log $PREV_TAG..$NEW_TAG --oneline)
           echo "::set-output name=notes::$NOTES"
       - name: Create release
