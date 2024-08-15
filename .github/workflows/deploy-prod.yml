@@ -29,7 +29,9 @@ jobs:
           PREV_TAG=${{ steps.prev-release.outputs.tag }}
           NEW_TAG=${{ inputs.tag }}
           NOTES=$(git log $PREV_TAG..$NEW_TAG --oneline)
-          echo "::set-output name=notes::$NOTES"
+          echo "Release notes:"
+          echo "$NOTES"
+          echo "notes=$NOTES" >> "$GITHUB_OUTPUT"
       - name: Create release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
