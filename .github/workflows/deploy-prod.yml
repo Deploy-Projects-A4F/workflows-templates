@@ -40,6 +40,6 @@ jobs:
           gh release create "${{ inputs.tag }}" \
               --repo="$GITHUB_REPOSITORY" \
               --title="${{ inputs.tag }}" \
-              --notes="${{ steps.release-notes.outputs.notes }}"
+              --notes="$(echo "${{ steps.release-notes.outputs.notes }}")"
       - run: echo "Deploying my_image:${{ inputs.tag }}"
       - run: echo "🍏 This job's status is ${{ job.status }}."
