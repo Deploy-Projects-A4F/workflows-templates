@@ -27,7 +27,7 @@ jobs:
       - name: Create Tag
         id: create_tag
         run: |
-          LATEST_TAG=$(git tag -l | tail -1)
+          LATEST_TAG=$(git tag -l | sort -V | tail -1)
           echo "$LATEST_TAG"
           TAG_NAME=""
           if [ -z "$LATEST_TAG" ]; then
