@@ -24,23 +24,17 @@ jobs:
           PREV_RELEASE=$(gh release list --limit 1 --json tagName --jq '.[0].tagName')
           echo "Previous release tag: $PREV_RELEASE"
           echo "::set-output name=tag::$PREV_RELEASE"
-      - name: Generate release notes
-        id: release-notes
-        run: |
-          PREV_TAG=${{ steps.prev-release.outputs.tag }}
-          NEW_TAG=${{ inputs.tag }}
-          NOTES=$(git log $PREV_TAG..$NEW_TAG --oneline)
-          echo "Release notes:"
-          echo "$NOTES"
-          echo "::set-output name=notes::$NOTES"
       - name: Create release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          echo "${{ steps.release-notes.outputs.notes }}"
+          PREV_TAG=${{ steps.prev-release.outputs.tag }}
+          NEW_TAG=${{ inputs.tag }}
+          NOTES=$(git log $PREV_TAG..$NEW_TAG --oneline)
+          echo "$NOTES"
           gh release create "${{ inputs.tag }}" \
               --repo="$GITHUB_REPOSITORY" \
               --title="${{ inputs.tag }}" \
-              --notes="$(echo "${{ steps.release-notes.outputs.notes }}")"
+              --notes="$NOTES"
       - run: echo "Deploying my_image:${{ inputs.tag }}"
       - run: echo "🍏 This job's status is ${{ job.status }}."
