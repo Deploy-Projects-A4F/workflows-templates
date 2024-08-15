@@ -22,6 +22,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           PREV_RELEASE=$(gh release list --limit 1 --json tagName --jq '.[0].tagName')
+          echo "Previous release tag: $PREV_RELEASE"
           echo "::set-output name=tag::$PREV_RELEASE"
       # - name: Generate release notes
       #   id: release-notes
